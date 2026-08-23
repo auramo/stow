@@ -22,7 +22,7 @@ struct NewPackingListView: View {
     }
 
     private var canCreate: Bool {
-        !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !selected.isEmpty
+        !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
@@ -32,9 +32,9 @@ struct NewPackingListView: View {
                     TextField("Packing list name", text: $name)
                 }
 
-                Section("Base lists") {
+                Section {
                     if baseLists.isEmpty {
-                        Text("No base lists yet — create one first.")
+                        Text("No base lists yet — you can still create a blank list and add items by hand.")
                             .foregroundStyle(.secondary)
                     }
                     ForEach(baseLists) { list in
@@ -49,6 +49,10 @@ struct NewPackingListView: View {
                         }
                         .buttonStyle(.plain)
                     }
+                } header: {
+                    Text("Base lists (optional)")
+                } footer: {
+                    Text("Leave all unselected to start with a blank list.")
                 }
 
                 if !selected.isEmpty {

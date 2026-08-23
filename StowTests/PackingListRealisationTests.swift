@@ -36,6 +36,13 @@ struct PackingListRealisationTests {
         #expect(packing.orderedItems.allSatisfy { !$0.isPacked })
     }
 
+    @Test func createsEmptyPackingListWhenNoBaseListsSelected() {
+        let context = ModelContext(Self.container)
+        let packing = PackingListFactory.makePackingList(name: "Blank Trip", from: [], in: context)
+        #expect(packing.name == "Blank Trip")
+        #expect(packing.orderedItems.isEmpty)
+    }
+
     @Test func packingListIsIndependentOfLaterBaseListEdits() {
         let context = ModelContext(Self.container)
         let camping = makeBaseList("Camping", ["Tent", "Toothbrush"], in: context)
