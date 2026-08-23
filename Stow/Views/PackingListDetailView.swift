@@ -5,6 +5,7 @@ import UIKit
 /// Check off, add, rename, delete, and reorder items in a packing list.
 struct PackingListDetailView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     @Bindable var list: PackingList
     @State private var newItem = ""
 
@@ -27,6 +28,13 @@ struct PackingListDetailView: View {
                 }
                 Button(action: pasteItems) {
                     Label("Paste lines from clipboard", systemImage: "doc.on.clipboard")
+                }
+            }
+
+            Section {
+                ArchiveButton(isArchived: list.isArchived) {
+                    if list.isArchived { list.unarchive() } else { list.archive() }
+                    dismiss()
                 }
             }
         }

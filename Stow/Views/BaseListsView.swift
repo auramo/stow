@@ -12,6 +12,7 @@ struct BaseListsView: View {
 
     @State private var showingNew = false
     @State private var newName = ""
+    @State private var showArchived = false
 
     var body: some View {
         NavigationStack {
@@ -31,7 +32,7 @@ struct BaseListsView: View {
                     }
                 }
 
-                if !archived.isEmpty {
+                if showArchived && !archived.isEmpty {
                     Section("Archived") {
                         ForEach(archived) { list in
                             NavigationLink(value: list) { BaseListRow(list: list) }
@@ -40,7 +41,7 @@ struct BaseListsView: View {
                                         Label("Delete", systemImage: "trash")
                                     }
                                     Button { list.unarchive() } label: {
-                                        Label("Restore", systemImage: "arrow.uturn.backward")
+                                        Label("Unarchive", systemImage: "arrow.uturn.backward")
                                     }
                                     .tint(.blue)
                                 }
@@ -51,7 +52,19 @@ struct BaseListsView: View {
             .navigationTitle("Base Lists")
             .navigationDestination(for: BaseList.self) { BaseListDetailView(list: $0) }
             .toolbar {
-                Button { newName = ""; showingNew = true } label: { Label("New", systemImage: "plus") }
+                if !archived.isEmpty {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            showArchived.toggle()
+                        } label: {
+                            Label(showArchived ? "Hide Archived" : "Show Archived",
+                                  systemImage: showArchived ? "archivebox.fill" : "archivebox")
+                        }
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { newName = ""; showingNew = true } label: { Label("New", systemImage: "plus") }
+                }
             }
             .overlay {
                 if active.isEmpty && archived.isEmpty {

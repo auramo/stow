@@ -5,6 +5,7 @@ import UIKit
 /// Edit a base list's label-only items: add, rename, delete, reorder.
 struct BaseListDetailView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     @Bindable var list: BaseList
     @State private var newItem = ""
 
@@ -29,6 +30,13 @@ struct BaseListDetailView: View {
                 }
                 Button(action: pasteItems) {
                     Label("Paste lines from clipboard", systemImage: "doc.on.clipboard")
+                }
+            }
+
+            Section {
+                ArchiveButton(isArchived: list.isArchived) {
+                    if list.isArchived { list.unarchive() } else { list.archive() }
+                    dismiss()
                 }
             }
         }
