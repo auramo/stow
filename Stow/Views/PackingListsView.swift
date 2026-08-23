@@ -56,9 +56,9 @@ struct PackingListsView: View {
                         Button {
                             showArchived.toggle()
                         } label: {
-                            Label(showArchived ? "Hide Archived" : "Show Archived",
-                                  systemImage: showArchived ? "archivebox.fill" : "archivebox")
+                            ArchiveToggleLabel(isOn: showArchived)
                         }
+                        .accessibilityLabel(showArchived ? Text("Hide Archived") : Text("Show Archived"))
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
