@@ -70,7 +70,7 @@ private struct PackingListRow: View {
     let list: PackingList
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(list.name.isEmpty ? "Untitled" : list.name)
+            Text(list.name.isEmpty ? String(localized: "Untitled") : list.name)
             if list.totalCount > 0 {
                 ProgressView(value: Double(list.packedCount), total: Double(list.totalCount)) {
                     Text("\(list.packedCount) of \(list.totalCount) packed")

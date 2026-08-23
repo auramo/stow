@@ -28,7 +28,7 @@ struct BaseListDetailView: View {
                 }
             }
         }
-        .navigationTitle(list.name.isEmpty ? "Untitled" : list.name)
+        .navigationTitle(list.name.isEmpty ? String(localized: "Untitled") : list.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { EditButton() }
     }

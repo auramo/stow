@@ -78,8 +78,8 @@ private struct BaseListRow: View {
     let list: BaseList
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(list.name.isEmpty ? "Untitled" : list.name)
-            Text("^[\(list.orderedItems.count) item](inflect: true)")
+            Text(list.name.isEmpty ? String(localized: "Untitled") : list.name)
+            Text("\(list.orderedItems.count) items")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

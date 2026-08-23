@@ -42,7 +42,7 @@ struct NewPackingListView: View {
                             HStack {
                                 Image(systemName: selected.contains(list.persistentModelID) ? "checkmark.circle.fill" : "circle")
                                     .foregroundStyle(selected.contains(list.persistentModelID) ? Color.accentColor : .secondary)
-                                Text(list.name.isEmpty ? "Untitled" : list.name)
+                                Text(list.name.isEmpty ? String(localized: "Untitled") : list.name)
                                 Spacer()
                                 Text("\(list.orderedItems.count)").foregroundStyle(.secondary)
                             }
@@ -57,7 +57,7 @@ struct NewPackingListView: View {
 
                 if !selected.isEmpty {
                     Section {
-                        Text("^[\(mergedCount) item](inflect: true) after merging duplicates")
+                        Text("\(mergedCount) items after merging duplicates")
                             .foregroundStyle(.secondary)
                     }
                 }
