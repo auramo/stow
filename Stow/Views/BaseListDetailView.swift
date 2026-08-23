@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 /// Edit a base list's label-only items: add, rename, delete, reorder.
 struct BaseListDetailView: View {
@@ -26,6 +27,9 @@ struct BaseListDetailView: View {
                     Button(action: add) { Image(systemName: "plus.circle.fill") }
                         .disabled(newItem.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
+                Button(action: pasteItems) {
+                    Label("Paste lines from clipboard", systemImage: "doc.on.clipboard")
+                }
             }
         }
         .navigationTitle(list.name.isEmpty ? String(localized: "Untitled") : list.name)
@@ -41,6 +45,21 @@ struct BaseListDetailView: View {
         item.list = list
         list.touch()
         newItem = ""
+    }
+
+    /// Add one item per non-blank line of the clipboard text.
+    private func pasteItems() {
+        guard let text = UIPasteboard.general.string else { return }
+        let labels = ClipboardImport.itemLabels(from: text)
+        guard !labels.isEmpty else { return }
+        var order = ListOrdering.nextSortOrder(after: list.orderedItems)
+        for label in labels {
+            let item = BaseItem(label: label, sortOrder: order)
+            context.insert(item)
+            item.list = list
+            order += 1
+        }
+        list.touch()
     }
 
     private func delete(at offsets: IndexSet) {

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 /// Check off, add, rename, delete, and reorder items in a packing list.
 struct PackingListDetailView: View {
@@ -24,6 +25,9 @@ struct PackingListDetailView: View {
                     Button(action: add) { Image(systemName: "plus.circle.fill") }
                         .disabled(newItem.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
+                Button(action: pasteItems) {
+                    Label("Paste lines from clipboard", systemImage: "doc.on.clipboard")
+                }
             }
         }
         .navigationTitle(list.name.isEmpty ? String(localized: "Untitled") : list.name)
@@ -39,6 +43,21 @@ struct PackingListDetailView: View {
         item.list = list
         list.touch()
         newItem = ""
+    }
+
+    /// Add one item per non-blank line of the clipboard text (all unpacked).
+    private func pasteItems() {
+        guard let text = UIPasteboard.general.string else { return }
+        let labels = ClipboardImport.itemLabels(from: text)
+        guard !labels.isEmpty else { return }
+        var order = ListOrdering.nextSortOrder(after: list.orderedItems)
+        for label in labels {
+            let item = PackingItem(label: label, isPacked: false, sortOrder: order)
+            context.insert(item)
+            item.list = list
+            order += 1
+        }
+        list.touch()
     }
 
     private func delete(at offsets: IndexSet) {

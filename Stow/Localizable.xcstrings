@@ -259,6 +259,16 @@
         }
       }
     },
+    "Paste lines from clipboard" : {
+      "localizations" : {
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liitä rivit leikepöydältä"
+          }
+        }
+      }
+    },
     "No Base Lists" : {
       "localizations" : {
         "fi" : {
