@@ -10,11 +10,12 @@ struct PackingListsView: View {
     @Query(filter: #Predicate<PackingList> { $0.isArchived }, sort: \PackingList.updatedAt, order: .reverse)
     private var archived: [PackingList]
 
-    @State private var showingNew = false
+    @Binding var path: NavigationPath
+    @Binding var showingNew: Bool
     @State private var showArchived = false
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 Section {
                     ForEach(active) { list in
@@ -60,9 +61,6 @@ struct PackingListsView: View {
                         }
                         .accessibilityLabel(showArchived ? Text("Hide Archived") : Text("Show Archived"))
                     }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { showingNew = true } label: { Label("New", systemImage: "plus") }
                 }
             }
             .overlay {

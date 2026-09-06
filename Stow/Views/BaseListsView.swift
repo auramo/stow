@@ -10,12 +10,13 @@ struct BaseListsView: View {
     @Query(filter: #Predicate<BaseList> { $0.isArchived }, sort: \BaseList.updatedAt, order: .reverse)
     private var archived: [BaseList]
 
-    @State private var showingNew = false
+    @Binding var path: NavigationPath
+    @Binding var showingNew: Bool
     @State private var newName = ""
     @State private var showArchived = false
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 Section {
                     ForEach(active) { list in
@@ -62,15 +63,16 @@ struct BaseListsView: View {
                         .accessibilityLabel(showArchived ? Text("Hide Archived") : Text("Show Archived"))
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { newName = ""; showingNew = true } label: { Label("New", systemImage: "plus") }
-                }
             }
             .overlay {
                 if active.isEmpty && archived.isEmpty {
                     ContentUnavailableView("No Base Lists", systemImage: "doc.text",
                                            description: Text("Create a reusable template you can pack from."))
                 }
+            }
+            .onChange(of: showingNew) { _, isShowing in
+                // The alert reuses one text field; start each one empty.
+                if isShowing { newName = "" }
             }
             .alert("New Base List", isPresented: $showingNew) {
                 TextField("Name", text: $newName)
