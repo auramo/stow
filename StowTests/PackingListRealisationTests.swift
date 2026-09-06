@@ -2,15 +2,15 @@ import Testing
 import SwiftData
 @testable import Stow
 
-// Creating more than one in-memory ModelContainer per process trips a trap deep
-// in SwiftData's CoreData-backed store. Swift Testing makes a fresh suite
-// instance per test, so share ONE container (static) and give each test its own
-// context for isolation. `.serialized` keeps the shared store single-threaded.
+// Swift Testing makes a fresh suite instance per test, so the store comes from
+// the process-wide `TestContainer.shared` (see its note on why there can only be
+// one) and each test gets its own context for isolation. `.serialized` keeps the
+// shared store single-threaded.
 @Suite(.serialized)
 @MainActor
 struct PackingListRealisationTests {
 
-    static let container = StowModelContainer.makeInMemory()
+    static let container = TestContainer.shared
 
     /// Build a base list with the given labels (sortOrder follows array order),
     /// inserted into `context`.

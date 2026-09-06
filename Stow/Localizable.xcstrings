@@ -237,6 +237,23 @@
         }
       }
     },
+    "Make this a base list": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make this a base list"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tee tästä pohjalista"
+          }
+        }
+      }
+    },
     "Name": {
       "localizations": {
         "fi": {

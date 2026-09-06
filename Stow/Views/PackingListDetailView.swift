@@ -8,6 +8,8 @@ struct PackingListDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var list: PackingList
     @State private var newItem = ""
+    @State private var showingNewBaseList = false
+    @State private var baseListName = ""
 
     var body: some View {
         List {
@@ -36,11 +38,29 @@ struct PackingListDetailView: View {
                     if list.isArchived { list.unarchive() } else { list.archive() }
                     dismiss()
                 }
+                Button {
+                    baseListName = list.name
+                    showingNewBaseList = true
+                } label: {
+                    Label("Make this a base list", systemImage: "doc.text")
+                }
             }
         }
         .navigationTitle(list.name.isEmpty ? String(localized: "Untitled") : list.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { EditButton() }
+        .alert("Make this a base list", isPresented: $showingNewBaseList) {
+            TextField("Name", text: $baseListName)
+            Button("Create") { makeBaseList() }
+            Button("Cancel", role: .cancel) {}
+        }
+    }
+
+    /// Capture this packing list's items as a reusable base list.
+    private func makeBaseList() {
+        let name = baseListName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        BaseListFactory.makeBaseList(name: name, from: list, in: context)
     }
 
     private func add() {
