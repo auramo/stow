@@ -60,3 +60,7 @@ steps to turn it on.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Privacy
+
+Stow collects no data; everything stays on your device. See [PRIVACY.md](PRIVACY.md).
