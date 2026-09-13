@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.com.example.Stow</string>
+		<string>iCloud.$(ORG_IDENTIFIER).Stow</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>

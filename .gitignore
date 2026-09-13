@@ -35,3 +35,6 @@ Carthage/Build/
 
 # Local tooling
 .claude/settings.local.json
+
+# Personal signing values — see Config/Local.xcconfig.template
+Config/Local.xcconfig

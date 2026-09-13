@@ -14,7 +14,8 @@ import SwiftData
 /// membership — a free personal team cannot create a container, and automatic
 /// signing cannot issue a profile carrying the iCloud entitlement. Once enrolled:
 ///
-/// 1. In the CloudKit console, create the container `iCloud.com.example.Stow`.
+/// 1. In the CloudKit console, create the container `iCloud.<ORG_IDENTIFIER>.Stow`,
+///    matching the `ORG_IDENTIFIER` set in `Config/Local.xcconfig`.
 /// 2. In Xcode, target Stow → Signing & Capabilities → + Capability → iCloud,
 ///    tick CloudKit, and select that container. Also add Background Modes →
 ///    Remote notifications, so changes from other devices arrive while running.
