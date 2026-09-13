@@ -56,3 +56,7 @@ The SwiftData model is CloudKit-compatible and sync is wired up, but switched
 off: CloudKit containers need a paid Apple Developer Program membership. See
 the notes at the top of `Stow/Persistence/StowModelContainer.swift` for the
 steps to turn it on.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
